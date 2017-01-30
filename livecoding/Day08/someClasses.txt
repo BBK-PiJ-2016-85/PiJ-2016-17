@@ -1,0 +1,29 @@
+package uk.ac.bbk.pij;
+
+public class SuperClass {
+
+   public int publicField;
+
+   protected int protectedField;
+
+   int packageField;
+
+   private int privateField;
+
+   private void anotherMethod() {
+      someMethod(); // ERROR: SubClass is not ancestor of SuperClass
+   }
+
+}
+==================================
+package uk.ac.bbk.pij.day8;
+
+public class SubClass extends SuperClass {
+
+   protected void someMethod() {
+        publicField = 1;
+	packageField = 1;  // COMPILATION ERROR: DIFFERENT PACKAGE
+        protectedField = 1;        
+   }
+
+}
