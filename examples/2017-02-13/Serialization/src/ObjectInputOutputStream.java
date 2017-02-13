@@ -13,9 +13,9 @@ public class ObjectInputOutputStream {
         hand.add(card);
         System.out.println("Hand to write is: " + hand);
 
-        try {
-            FileOutputStream out = new FileOutputStream("hand.out");
-            ObjectOutputStream oos = new ObjectOutputStream(out);
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream("hand.out"));
+        ) {
             oos.writeObject(hand);
             oos.flush();
         } catch (Exception e) {
@@ -24,10 +24,9 @@ public class ObjectInputOutputStream {
 
         hand = null;
 
-        try {
-            FileInputStream in = new FileInputStream("hand.out");
-            ObjectInputStream ois = new ObjectInputStream(in);
-            hand = (Hand)(ois.readObject());
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream("hand.out"))){
+            hand = (Hand) (ois.readObject());
         } catch (Exception e) {
             System.out.println("Problem serializing: " + e);
         }

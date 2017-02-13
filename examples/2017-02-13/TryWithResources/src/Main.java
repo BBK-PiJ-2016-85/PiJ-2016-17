@@ -5,33 +5,22 @@ import java.io.IOException;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-		FileReader fr = null;
-		BufferedReader br = null;
-		try {
-			fr = new FileReader("ATextFile.txt");
-			br = new BufferedReader(fr);
-			String s;
-			while((s = br.readLine()) != null) {
-				System.out.println(s);
-			}
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("ATextFile.txt"))) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                System.out.println(s);
+            }
 
-		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		finally {
-			System.out.println("Executing finally!");
-			if (fr != null) {
-				fr.close();
-			}
-			if (br != null) {
-				br.close();
-			}
-		}
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("Executing finally!");
+        }
+        System.out.println("Still Alive!!!");
 
-		System.out.println("Still Alive!!!");
-
-	}
+    }
 
 }
