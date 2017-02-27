@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponsiveUserInterface {
+  private static final int NUMBEROFTASKS = 10;
 
   private List<Integer> finishedTasks = new ArrayList<>();
 
@@ -15,18 +16,21 @@ public class ResponsiveUserInterface {
   }
 
   private void launch() {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < NUMBEROFTASKS; i++) {
       reportOnFinishedTasks();
       System.out.print("Enter the duration (in ms) of task " + i + ": ");
       int duration = Integer.parseInt(System.console().readLine());
+      
       Runnable task = new Waiter(i, duration, this);
       Thread t = new Thread(task);
       t.start();                    // equiv. to => (new Thread(task)).start();
       activeTaskCount++;
     }
+    
     while (!allTasksFinished()) {
       waitForAWhile();
     }
+    
     reportOnFinishedTasks();
   }
 
@@ -40,7 +44,7 @@ public class ResponsiveUserInterface {
   }
 
   public boolean allTasksFinished() {
-    return (activeTaskCount == 0);
+    return activeTaskCount == 0;
   }
 
   public synchronized void reportFinished(int id) {
@@ -51,6 +55,7 @@ public class ResponsiveUserInterface {
 
   private synchronized void reportOnFinishedTasks() {
     if (finishedTasks.size() == 0) {
+      System.out.println("There are no finished tasks");
       return;
     }
     System.out.print("Finished tasks: ");
@@ -61,8 +66,3 @@ public class ResponsiveUserInterface {
     finishedTasks = new ArrayList<>();
   }
 }
-
-
-
-
-

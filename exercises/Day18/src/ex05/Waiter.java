@@ -20,6 +20,6 @@ public class Waiter implements Runnable {
       ex.printStackTrace();
       // we will just wait a little less
     }
-    origin.reportFinished(this.id);
+    origin.reportFinished(id);
   }
 }
